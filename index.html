@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PC Fixer - Quiz de Manutenção</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ==================================================
+         TELA INICIAL
+    =================================================== -->
+
+    <section id="startScreen" class="screen active">
+
+        <div class="start-container">
+
+            <div class="logo-box">
+                <i class="bi bi-pc-display"></i>
+            </div>
+
+            <h1>
+                PC <span>FIXER</span>
+            </h1>
+
+            <p class="subtitle">
+                QUIZ DE MANUTENÇÃO DE COMPUTADORES
+            </p>
+
+            <div class="start-card">
+
+                <div class="card-icon">
+                    <i class="bi bi-tools"></i>
+                </div>
+
+                <h2>
+                    Teste seus conhecimentos!
+                </h2>
+
+                <p>
+                    Responda perguntas sobre manutenção,
+                    hardware e diagnóstico de computadores.
+                </p>
+
+                <label for="playerName">
+                    DIGITE SEU NOME
+                </label>
+
+                <input
+                    type="text"
+                    id="playerName"
+                    class="form-control"
+                    maxlength="20"
+                    placeholder="Ex: João"
+                    autocomplete="off"
+                >
+
+                <div
+                    id="nameError"
+                    class="name-error"
+                >
+                    Digite seu nome para começar.
+                </div>
+
+                <button
+                    id="startButton"
+                    class="main-button"
+                >
+                    <i class="bi bi-play-fill"></i>
+                    COMEÇAR JOGO
+                </button>
+
+                <div class="game-info">
+
+                    <div>
+                        <i class="bi bi-question-circle"></i>
+                        <strong>10</strong>
+                        <span>PERGUNTAS</span>
+                    </div>
+
+                    <div>
+                        <i class="bi bi-star-fill"></i>
+                        <strong>100</strong>
+                        <span>PONTOS</span>
+                    </div>
+
+                    <div>
+                        <i class="bi bi-trophy-fill"></i>
+                        <strong>PLACAR</strong>
+                        <span>FINAL</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button
+                id="showRankingStart"
+                class="ranking-link"
+            >
+                <i class="bi bi-trophy"></i>
+                VER PLACAR
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         TELA DO QUIZ
+    =================================================== -->
+
+    <section id="quizScreen" class="screen">
+
+        <div class="quiz-container">
+
+            <!-- CABEÇALHO -->
+
+            <header class="quiz-header">
+
+                <div class="brand-small">
+
+                    <i class="bi bi-pc-display"></i>
+
+                    <span>
+                        PC<span>FIXER</span>
+                    </span>
+
+                </div>
+
+                <div class="player-header">
+
+                    <div class="mini-avatar">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+
+                    <div>
+                        <strong id="quizPlayerName">
+                            Jogador
+                        </strong>
+
+                        <small>
+                            Técnico em treinamento
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="score-header">
+
+                    <i class="bi bi-star-fill"></i>
+
+                    <span id="currentScore">
+                        0
+                    </span>
+
+                    XP
+
+                </div>
+
+            </header>
+
+
+            <!-- PROGRESSO -->
+
+            <div class="progress-area">
+
+                <div class="progress-info">
+
+                    <span>
+                        PERGUNTA
+                        <strong id="questionNumber">
+                            1
+                        </strong>
+                        DE
+                        <strong id="totalQuestions">
+                            10
+                        </strong>
+                    </span>
+
+                    <span id="progressPercent">
+                        10%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        id="progressBar"
+                        class="progress-bar"
+                        role="progressbar"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CRONÔMETRO -->
+            <div style="text-align: center; margin-bottom: 12px; font-family: 'Orbitron', sans-serif; color: var(--yellow); font-size: 13px;">
+                <i class="bi bi-clock-fill"></i> Tempo Restante: <span id="timeLeft">15</span>s
+            </div>
+
+
+            <!-- PERGUNTA -->
+
+            <main class="question-card">
+
+                <div
+                    id="questionCategory"
+                    class="question-category"
+                >
+                    HARDWARE
+                </div>
+
+                <div class="question-icon">
+                    <i
+                        id="questionIcon"
+                        class="bi bi-question-lg"
+                    ></i>
+                </div>
+
+                <h2 id="questionText">
+                    Carregando pergunta...
+                </h2>
+
+
+                <!-- ALTERNATIVAS -->
+
+                <div
+                    id="answersContainer"
+                    class="answers-container"
+                >
+                </div>
+
+
+                <!-- FEEDBACK -->
+
+                <div
+                    id="feedback"
+                    class="feedback"
+                >
+
+                    <div id="feedbackIcon"></div>
+
+                    <div>
+
+                        <strong id="feedbackTitle">
+                        </strong>
+
+                        <p id="feedbackText">
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BOTÃO -->
+
+                <button
+                    id="nextButton"
+                    class="next-button"
+                    disabled
+                >
+                    PRÓXIMA PERGUNTA
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+
+            </main>
+
+
+            <!-- RODAPÉ -->
+
+            <footer class="quiz-footer">
+
+                <span>
+                    <i class="bi bi-lightbulb"></i>
+                    Pense antes de responder!
+                </span>
+
+                <span>
+                    <i class="bi bi-shield-check"></i>
+                    PC Fixer
+                </span>
+
+            </footer>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         TELA FINAL
+    =================================================== -->
+
+    <section id="resultScreen" class="screen">
+
+        <div class="result-container">
+
+            <div class="result-header">
+
+                <div class="trophy">
+
+                    <i class="bi bi-trophy-fill"></i>
+
+                </div>
+
+                <p>
+                    DESAFIO CONCLUÍDO
+                </p>
+
+                <h1>
+                    PARABÉNS!
+                </h1>
+
+                <span id="resultPlayerName">
+                    Jogador
+                </span>
+
+            </div>
+
+
+            <!-- RESULTADO -->
+
+            <div class="result-card">
+
+                <div class="final-score">
+
+                    <span>
+                        SUA PONTUAÇÃO
+                    </span>
+
+                    <strong id="finalScore">
+                        0
+                    </strong>
+
+                    <small>
+                        XP
+                    </small>
+
+                </div>
+
+
+                <div class="result-stats">
+
+                    <div class="result-stat correct">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <strong id="correctAnswers">
+                            0
+                        </strong>
+
+                        <span>
+                            ACERTOS
+                        </span>
+
+                    </div>
+
+
+                    <div class="result-stat wrong">
+
+                        <i class="bi bi-x-circle-fill"></i>
+
+                        <strong id="wrongAnswers">
+                            0
+                        </strong>
+
+                        <span>
+                            ERROS
+                        </span>
+
+                    </div>
+
+
+                    <div class="result-stat">
+
+                        <i class="bi bi-percent"></i>
+
+                        <strong id="percentage">
+                            0%
+                        </strong>
+
+                        <span>
+                            APROVEITAMENTO
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MENSAGEM -->
+
+                <div
+                    id="resultMessage"
+                    class="result-message"
+                >
+                </div>
+
+
+                <!-- BOTÕES -->
+
+                <div class="result-buttons">
+
+                    <button
+                        id="playAgain"
+                        class="main-button"
+                    >
+                        <i class="bi bi-arrow-repeat"></i>
+                        JOGAR NOVAMENTE
+                    </button>
+
+                    <button
+                        id="showRanking"
+                        class="secondary-button"
+                    >
+                        <i class="bi bi-trophy"></i>
+                        VER PLACAR
+                    </button>
+
+                    <button
+                        id="backHome"
+                        class="text-button"
+                    >
+                        VOLTAR AO INÍCIO
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         TELA DO PLACAR
+    =================================================== -->
+
+    <section id="rankingScreen" class="screen">
+
+        <div class="ranking-container">
+
+            <div class="ranking-title">
+
+                <div class="ranking-trophy">
+                    <i class="bi bi-trophy-fill"></i>
+                </div>
+
+                <p>
+                    RANKING
+                </p>
+
+                <h1>
+                    HALL DOS TÉCNICOS
+                </h1>
+
+                <span>
+                    Os melhores resultados ficam aqui.
+                </span>
+
+            </div>
+
+
+            <div class="ranking-card">
+
+                <div class="ranking-head">
+
+                    <span>
+                        POSIÇÃO
+                    </span>
+
+                    <span>
+                        JOGADOR
+                    </span>
+
+                    <span>
+                        ACERTOS
+                    </span>
+
+                    <span>
+                        PONTOS
+                    </span>
+
+                </div>
+
+
+                <div id="rankingList">
+                    <!-- O JavaScript coloca os jogadores aqui -->
+                </div>
+
+
+                <div
+                    id="emptyRanking"
+                    class="empty-ranking"
+                >
+
+                    <i class="bi bi-trophy"></i>
+
+                    <p>
+                        Nenhum jogador ainda.
+                    </p>
+
+                    <small>
+                        Seja o primeiro a entrar no ranking!
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="ranking-actions">
+
+                <button
+                    id="rankingBack"
+                    class="secondary-button"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    VOLTAR
+                </button>
+
+                <button
+                    id="clearRanking"
+                    class="clear-button"
+                >
+                    <i class="bi bi-trash"></i>
+                    LIMPAR PLACAR
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
